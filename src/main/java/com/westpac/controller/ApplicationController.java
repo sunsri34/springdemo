@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.xml.ws.Response;
 import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -52,7 +54,7 @@ public class ApplicationController {
 		obj.put("applicationId","1");
 		obj.put("title","CC");
 		obj.put("category","Credit Cards Category");
-		try (FileWriter file = new FileWriter("C:\\Users\\IBM_ADMIN\\Downloads\\spring-boot-demo\\src\\main\\resources\\200.JSON")) {
+		try (FileWriter file = new FileWriter("./\\src\\main\\resources\\200.JSON")) {
 			file.write(obj.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object: " + obj);
@@ -92,7 +94,7 @@ public class ApplicationController {
 		JSONObject obj=new JSONObject();
 		obj.put("errorCode","300");
 		obj.put("errorDescription","The value returned when an external ID exists in more than one record. The response body contains the list of matching records.");
-		try (FileWriter file = new FileWriter("C:\\Users\\IBM_ADMIN\\Downloads\\spring-boot-demo\\src\\main\\resources\\300.JSON")) {
+		try (FileWriter file = new FileWriter("./\\src\\main\\resources\\300.JSON")) {
 			file.write(obj.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object: " + obj);
@@ -107,7 +109,7 @@ public class ApplicationController {
 		JSONObject obj=new JSONObject();
 		obj.put("errorCode","400");
 		obj.put("errorDescription","The request couldn’t be understood, usually because the JSON or XML body contains an error.");
-		try (FileWriter file = new FileWriter("C:\\Users\\IBM_ADMIN\\Downloads\\spring-boot-demo\\src\\main\\resources\\400.JSON")) {
+		try (FileWriter file = new FileWriter("./\\src\\main\\resources\\400.JSON")) {
 			file.write(obj.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object: " + obj);
@@ -155,14 +157,35 @@ public class ApplicationController {
 
 	@GetMapping("500")//WORKING
 	public ResponseEntity<String> getStub500() {
+		String templatePath = "./\\src\\main\\templates\\";
+		String targetPath = "./\\src\\main\\resources\\";
+		String jsonExt = ".JSON";
+		String statusCode = "500";
+		//Read the .JSON Template for 500
+		JSONParser parser = new JSONParser();
+		String errorCode ="";
+		String errorDescription ="";
+		JSONObject jsonObj=null;
+		try {
+			Object obj=parser.parse(new FileReader(templatePath+statusCode+jsonExt));
+			 jsonObj = (JSONObject)obj;
+			System.out.println(jsonObj);
+			 errorCode = (String) jsonObj.get("errorCode");
+            System.out.println(errorCode);
+			 errorDescription = (String) jsonObj.get("errorDescription");
+            System.out.println(errorDescription);
+        }catch(IOException io) {
+		}catch (ParseException e) {
+            e.printStackTrace();
+        }
 		// Creating JOSNObject
-		JSONObject obj=new JSONObject();
-		obj.put("errorCode","500");
-		obj.put("errorDescription","An error has occurred within Force.com, so the request couldn’t be completed. Contact Salesforce Customer Support.");
-		try (FileWriter file = new FileWriter("C:\\Users\\IBM_ADMIN\\Downloads\\spring-boot-demo\\src\\main\\resources\\500.JSON")) {
-			file.write(obj.toJSONString());
+		//JSONObject obj=new JSONObject();
+		//jsonObj.put(errorCode,"500");
+		jsonObj.put("errorDescription","An error has occurred within Force.com, so the request couldn’t be completed. Contact Salesforce Customer Support.");
+		try (FileWriter file = new FileWriter(targetPath+statusCode+jsonExt)) {
+			file.write(jsonObj.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
-			System.out.println("\nJSON Object: " + obj);
+			System.out.println("\nJSON Object: " + jsonObj);
 		}catch(IOException io) {
 			io.printStackTrace();
 		}
@@ -216,5 +239,6 @@ public class ApplicationController {
 
 	}
 	 */
+	
 
 } 
