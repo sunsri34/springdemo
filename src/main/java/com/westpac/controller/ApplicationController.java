@@ -99,7 +99,7 @@ public class ApplicationController {
 		}catch(IOException io) {
 			io.printStackTrace();
 		}
-		return new ResponseEntity<String>("300_Stub response is saved under ./src/main/resournces/", HttpStatus.OK);
+		return new ResponseEntity<String>("300_Stub response is saved under ./src/main/resournces/", HttpStatus.MULTIPLE_CHOICES);
 		}
 	@GetMapping("400")//WORKING
 	public ResponseEntity<String> getStub400() {
@@ -114,8 +114,44 @@ public class ApplicationController {
 		}catch(IOException io) {
 			io.printStackTrace();
 		}
-		return new ResponseEntity<String>("400_Stub response is saved under ./src/main/resournces/", HttpStatus.OK);
+		ResponseEntity<String> response = new ResponseEntity<String>("400_Stub response is saved under ./src/main/resournces/", HttpStatus.BAD_REQUEST); 
+		System.out.println(response.getStatusCode());
+		return response; 
 		}
+	
+	/*private String getStatusCode() {
+		try {
+			URIBuilder builder = new URIBuilder(authorizationUrl + "/oauth/authorize"); 
+
+			builder.addParameter("response_type", "code");
+			builder.addParameter("grant_type","authorization_code");
+			builder.addParameter("client_id", sshClientId);
+			URI url = new URI(builder.toString());
+			ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+			HttpStatus statusCode = response.getStatusCode();
+			if (statusCode!=HttpStatus.FOUND) {
+				throw new CloudFoundryException(statusCode);
+			}
+			String loc = response.getHeaders().getFirst("Location");
+			if (loc==null) {
+				throw new CloudOperationException("No 'Location' header in redirect response");
+			}
+			List<NameValuePair> qparams = URLEncodedUtils.parse(new URI(loc), "utf8");
+			for (NameValuePair pair : qparams) {
+				String name = pair.getName();
+				if (name.equals("code")) {
+					return pair.getValue();
+				}
+			}
+			throw new CloudOperationException("No 'code' param in redirect Location: "+loc);
+		} catch (URISyntaxException e) {
+			throw new CloudOperationException(e);
+		}
+	}
+*/	
+	private ResponseEntity<String> getStub(ResponseEntity<String> response){
+		return new ResponseEntity<String>("400_Stub response is saved under ./src/main/resournces/", HttpStatus.BAD_REQUEST);
+	}
 
 	@GetMapping("500")//WORKING
 	public ResponseEntity<String> getStub500() {
@@ -130,7 +166,7 @@ public class ApplicationController {
 		}catch(IOException io) {
 			io.printStackTrace();
 		}
-		return new ResponseEntity<String>("500_Stub response is saved under ./src/main/resournces/", HttpStatus.OK);
+		return new ResponseEntity<String>("500_Stub response is saved under ./src/main/resournces/", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 
