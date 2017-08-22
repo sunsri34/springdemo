@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: westpac-application-fetch
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: sunsri
+Implementation-Vendor-Id: com.westpac
+Build-Jdk: 1.8.0_144
+Implementation-URL: http://projects.spring.io/spring-boot/westpac-appl
+ ication-fetch/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

@@ -1,0 +1,9 @@
+com\westpac\service\IApplicationService.class
+com\westpac\entity\Applicant.class
+com\westpac\StartFetch.class
+com\westpac\controller\ApplicationController.class
+com\westpac\dao\ApplicationDAO.class
+com\westpac\dao\IApplicationDAO.class
+com\westpac\aspects\LoggingAspect.class
+com\westpac\service\ApplicationService.class
+com\westpac\entity\Application.class

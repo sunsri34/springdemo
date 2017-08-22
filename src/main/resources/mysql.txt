@@ -1,0 +1,93 @@
+=== APPLICATION =======================================
+CREATE TABLE IF NOT EXISTS `application` (
+  `application_id` int(5) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  PRIMARY KEY (`application_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `application` (`application_id`, `title`, `category`) VALUES
+	(1, 'CC', 'Credit Cards Category'),
+	(2, 'DC', 'Debit Cards Category'),
+	(3, 'MC', 'Master Cards Category'),
+	(4, 'AC', 'Amex Cards Category'),
+	(5, 'RC', 'Royalty Cards Category'),
+	(6, 'BC', 'Bonus Cards Category'),
+	(7, 'PC', 'privilege Cards Category'),
+	(8, 'JC', 'Joining Cards Category'),
+	(9, 'LC', 'Loyalty Cards Category');
+	 
+	
+=== APPLICANT TABLE =====================================	
+CREATE TABLE IF NOT EXISTS applicant (
+    applicant_id INT NOT NULL AUTO_INCREMENT,
+    channel varchar(200) NOT NULL,
+    PRIMARY KEY (applicant_id)
+)   ENGINE=INNODB;
+
+
+INSERT INTO applicant (applicant_id,channel) VALUES 
+	(11, 'WOL'),
+	(22, 'SOL'),
+	(33, 'POL'),
+	(44, 'Mobile'),
+	(55, 'IVR'), 
+	(66, 'WOL'), 
+	(77, 'SOL'), 
+	(88, 'POL'), 
+	(99, 'Mobile'); 
+
+
+== APPLICATION_APPLICANT ==================================
+CREATE TABLE application_applicant (
+    no INT NOT NULL AUTO_INCREMENT,
+    application_id INT NOT NULL,
+    applicant_id INT NOT NULL,
+
+    PRIMARY KEY(no),
+    INDEX (application_id),
+    INDEX (applicant_id),
+
+    FOREIGN KEY (application_id)
+      REFERENCES application(application_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT,
+
+      FOREIGN KEY (applicant_id)
+      REFERENCES applicant(applicant_id)
+)   ENGINE=INNODB;
+
+INSERT INTO application_applicant (application_id,applicant_id) VALUES 
+	(1, 11),
+	(2, 22),
+	(3, 55),
+	(4, 11),
+	(5, 55), 
+	(6, 22), 
+	(7, 44), 
+	(8, 55), 
+	(9, 44); 
+	
+	
+== INDIVIDUAL TABLE =========================================
+CREATE TABLE IF NOT EXISTS individual (
+    individual_id INT NOT NULL AUTO_INCREMENT,
+    fname varchar(200) NOT NULL,
+    lname varchar(200) NOT NULL,
+    email varchar(200) NOT NULL,
+    contact varchar(200) NOT NULL,
+    PRIMARY KEY (individual_id)
+)   ENGINE=INNODB;
+
+INSERT INTO individual (individual_id,fname,lname,email,contact) VALUES 
+	(1, 'fname1','lname1','email1@gmail.com','1111111111'),
+	(2, 'fname2','lname2','email2@gmail.com','1111111111'),
+	(3, 'fname3','lname3','email3@gmail.com','1111111111'),
+	(4, 'fname4','lname4','email4@gmail.com','1111111111'),
+	(5, 'fname5','lname5','email5@gmail.com','1111111111'),
+	(6, 'fname6','lname6','email6@gmail.com','1111111111'),
+	(7, 'fname7','lname7','email7@gmail.com','1111111111'),
+	(8, 'fname8','lname8','email8@gmail.com','1111111111'),
+	(9, 'fname9','lname9','email9@gmail.com','1111111111');
+	 
+
