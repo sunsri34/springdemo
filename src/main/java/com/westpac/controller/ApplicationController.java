@@ -62,30 +62,6 @@ public class ApplicationController {
 			io.printStackTrace();
 		}
 
-
-		/* try {
-		  obj.writeJSONString(out);
-		  jsonText = out.toString();
-		  }catch(IOException io) {
-			  io.printStackTrace();
-		  }
-		  System.out.print(jsonText);*/
-		//String hello = "successFull right";
-		/*		int code = 200;
-		String respose = "";
-		StringBuilder content = new StringBuilder("");
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("200.JSON").getFile());
-		try(BufferedReader br = new BufferedReader(new FileReader(file))){
-			String currentLine;
-			while((currentLine=br.readLine()) !=null)
-			{
-				content.append(currentLine).append("\n");
-			}
-		}
-		catch(IOException e){
-			e.printStackTrace();
-		}*/
 		return new ResponseEntity<String>("200_Stub response is saved under ./src/main/resournces/", HttpStatus.OK);
 	}
 	@GetMapping("300")//WORKING
@@ -102,7 +78,7 @@ public class ApplicationController {
 			io.printStackTrace();
 		}
 		return new ResponseEntity<String>("300_Stub response is saved under ./src/main/resournces/", HttpStatus.MULTIPLE_CHOICES);
-		}
+	}
 	@GetMapping("400")//WORKING
 	public ResponseEntity<String> getStub400() {
 		// Creating JOSNObject
@@ -119,38 +95,8 @@ public class ApplicationController {
 		ResponseEntity<String> response = new ResponseEntity<String>("400_Stub response is saved under ./src/main/resournces/", HttpStatus.BAD_REQUEST); 
 		System.out.println(response.getStatusCode());
 		return response; 
-		}
-	
-	/*private String getStatusCode() {
-		try {
-			URIBuilder builder = new URIBuilder(authorizationUrl + "/oauth/authorize"); 
-
-			builder.addParameter("response_type", "code");
-			builder.addParameter("grant_type","authorization_code");
-			builder.addParameter("client_id", sshClientId);
-			URI url = new URI(builder.toString());
-			ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-			HttpStatus statusCode = response.getStatusCode();
-			if (statusCode!=HttpStatus.FOUND) {
-				throw new CloudFoundryException(statusCode);
-			}
-			String loc = response.getHeaders().getFirst("Location");
-			if (loc==null) {
-				throw new CloudOperationException("No 'Location' header in redirect response");
-			}
-			List<NameValuePair> qparams = URLEncodedUtils.parse(new URI(loc), "utf8");
-			for (NameValuePair pair : qparams) {
-				String name = pair.getName();
-				if (name.equals("code")) {
-					return pair.getValue();
-				}
-			}
-			throw new CloudOperationException("No 'code' param in redirect Location: "+loc);
-		} catch (URISyntaxException e) {
-			throw new CloudOperationException(e);
-		}
 	}
-*/	
+
 	private ResponseEntity<String> getStub(ResponseEntity<String> response){
 		return new ResponseEntity<String>("400_Stub response is saved under ./src/main/resournces/", HttpStatus.BAD_REQUEST);
 	}
@@ -168,20 +114,16 @@ public class ApplicationController {
 		JSONObject jsonObj=null;
 		try {
 			Object obj=parser.parse(new FileReader(templatePath+statusCode+jsonExt));
-			 jsonObj = (JSONObject)obj;
+			jsonObj = (JSONObject)obj;
 			System.out.println(jsonObj);
-			 errorCode = (String) jsonObj.get("errorCode");
-            System.out.println(errorCode);
-			 errorDescription = (String) jsonObj.get("errorDescription");
-            System.out.println(errorDescription);
-        }catch(IOException io) {
+			errorDescription = (String) jsonObj.get("errorDescription");
+			System.out.println(errorDescription);
+		}catch(IOException io) {
 		}catch (ParseException e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
 		// Creating JOSNObject
-		//JSONObject obj=new JSONObject();
-		//jsonObj.put(errorCode,"500");
-		jsonObj.put("errorDescription","An error has occurred within Force.com, so the request couldn’t be completed. Contact Salesforce Customer Support.");
+		jsonObj.put("errorDescription",":( :( :( Server is not happy to serve you better :) !!!!");
 		try (FileWriter file = new FileWriter(targetPath+statusCode+jsonExt)) {
 			file.write(jsonObj.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
@@ -190,7 +132,7 @@ public class ApplicationController {
 			io.printStackTrace();
 		}
 		return new ResponseEntity<String>("500_Stub response is saved under ./src/main/resournces/", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	}
 
 
 	@PostMapping("application")
@@ -214,31 +156,5 @@ public class ApplicationController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
-	/*	private Response stubTheClient() {
-		int code = 200;
-		String respose = "";
-		StringBuilder content = new StringBuilder("");
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("200.JSON").getFile());
-
-		try(BufferedReader br = new BufferedReader(new FileReader(file))){
-			String currentLine;
-			while((currentLine=br.readLine()) !=null)
-			{
-				content.append(currentLine).append("\n");
-
-			}
-
-		}
-		catch(IOException e){
-			e.printStackTrace();
-		}
-		respose = content.toString();
-		code = 200;
-		return Response.status(code).entity(respose).build();
-
-	}
-	 */
-	
 
 } 
